@@ -13,25 +13,48 @@ import { CommonModule } from '@angular/common';
 })
 export class SiteListComponent implements OnInit {
   passwordManagerService = inject(PasswordManagerService);
+
   allSites!: Observable<Array<any>>;
+  siteName!: string;
+  siteURL!: string;
+  siteImgURL!: string;
+  siteId!: string;
+
+  formState: string = "Add New";
 
   ngOnInit(): void {
     this.getAllSites();
   }
 
-
-
   onSubmit(values: NgForm) {
-    this.passwordManagerService.addSite(values)
-      .then(() => {
-        console.log("Data saved successfully!");      
-      })
-      .catch(err => {
-        console.log(err);        
-      });
+    if (this.formState === "Add New") {
+      this.passwordManagerService.addSite(values)
+        .then(() => {
+          console.log("Data added successfully!");      
+        })
+        .catch(err => {
+          console.log(err);        
+        });
+    } else if (this.formState === "Edit") {
+      this.passwordManagerService.updateSite(this.siteId, values)
+        .then(() => {
+          console.log("Data updated successfully!");      
+        })
+        .catch(err => {
+          console.log(err);        
+        });
+    } 
   }
 
   getAllSites() {
     this.allSites = this.passwordManagerService.getAllSites();
+  }
+
+  editSite(siteName: string, siteURL: string, siteImgURL: string, id: string) {
+    this.siteName = siteName;
+    this.siteURL = siteURL;
+    this.siteImgURL = siteImgURL;
+    this.siteId = id;
+    this.formState = "Edit";
   }
 }

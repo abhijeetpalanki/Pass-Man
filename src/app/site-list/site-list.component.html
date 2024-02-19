@@ -4,24 +4,24 @@
     <button class="btn btn-dark mb-2">Add New Site</button>
 
     <div class="border border-dark py-2 px-5">
-        <h2 class="text-center">Add New Site</h2>
-        <p class="text-center">You can add a new site from below form</p>
+        <h2 class="text-center">{{formState}} Site</h2>
+        <p class="text-center">You can {{formState}} site from below form</p>
         <form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
             <div class="mb-3">
                 <label for="siteName" class="form-label">Site Name</label>
-                <input ngModel type="text" class="form-control" id="siteName" name="siteName" />
+                <input [(ngModel)]="siteName" type="text" class="form-control" id="siteName" name="siteName" />
             </div>
             <div class="mb-3">
                 <label for="siteURL" class="form-label">Site URL</label>
-                <input ngModel type="text" class="form-control" id="siteURL" name="siteURL" />
+                <input [(ngModel)]="siteURL" type="text" class="form-control" id="siteURL" name="siteURL" />
             </div>
             <div class="mb-3">
                 <label for="siteImgURL" class="form-label">Site Image URL</label>
-                <input ngModel type="text" class="form-control" id="siteImgURL" name="siteImgURL" />
+                <input [(ngModel)]="siteImgURL" type="text" class="form-control" id="siteImgURL" name="siteImgURL" />
             </div>
             
             <div class="d-flex gap-2">
-                <button type="submit" class="btn btn-dark">Add New Site</button>
+                <button type="submit" class="btn btn-dark">{{formState}} Site</button>
                 <button class="btn btn-outline-dark">Cancel</button>
             </div>
         </form>
@@ -42,7 +42,7 @@
                         <div class="card-footer">                            
                             <div class="d-flex gap-2">
                                 <button class="btn btn-dark">Add New</button>
-                                <button class="btn btn-outline-dark">Edit</button>
+                                <button class="btn btn-outline-dark" (click)="editSite(site.siteName, site.siteURL, site.siteImgURL, site.id)">Edit</button>
                                 <button class="btn btn-outline-dark">Delete</button>
                             </div>
                         </div>
