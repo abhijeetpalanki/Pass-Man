@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "pass-man-1ca5f": {
+      "hosting": {
+        "pass-man": [
+          "pass-man-1ca5f"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "pass-man-1ca5f"
+  }
+}
