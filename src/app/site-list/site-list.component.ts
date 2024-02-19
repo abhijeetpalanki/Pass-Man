@@ -22,6 +22,10 @@ export class SiteListComponent implements OnInit {
 
   formState: string = "Add New";
 
+  isSuccess: boolean = false;
+  alertMessage: string = "";
+  alertColor: string = "";
+
   ngOnInit(): void {
     this.getAllSites();
   }
@@ -30,20 +34,22 @@ export class SiteListComponent implements OnInit {
     if (this.formState === "Add New") {
       this.passwordManagerService.addSite(values)
         .then(() => {
-          console.log("Data added successfully!");      
+          console.log("Data added successfully!");
+          this.showToast("added", "bg-success");
         })
         .catch(err => {
-          console.log(err);        
+          console.log(err);
         });
     } else if (this.formState === "Edit") {
       this.passwordManagerService.updateSite(this.siteId, values)
         .then(() => {
-          console.log("Data updated successfully!");      
+          console.log("Data updated successfully!");
+          this.showToast("updated", "bg-info");
         })
         .catch(err => {
-          console.log(err);        
+          console.log(err);
         });
-    } 
+    }
   }
 
   getAllSites() {
@@ -61,10 +67,17 @@ export class SiteListComponent implements OnInit {
   deleteSite(id: string) {
     this.passwordManagerService.deleteSite(id)
       .then(() => {
-        console.log("Data deleted successfully!");      
+        console.log("Data deleted successfully!");
+        this.showToast("deleted", "bg-danger");
       })
       .catch(err => {
-        console.log(err);        
+        console.log(err);
       });
+  }
+
+  showToast(message: string, bgColor: string) {
+    this.isSuccess = true;
+    this.alertMessage = message;
+    this.alertColor = bgColor;
   }
 }
