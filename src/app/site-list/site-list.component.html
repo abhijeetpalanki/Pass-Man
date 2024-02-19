@@ -43,7 +43,7 @@
                             <div class="d-flex gap-2">
                                 <button class="btn btn-dark">Add New</button>
                                 <button class="btn btn-outline-dark" (click)="editSite(site.siteName, site.siteURL, site.siteImgURL, site.id)">Edit</button>
-                                <button class="btn btn-outline-dark">Delete</button>
+                                <button class="btn btn-outline-dark" (click)="deleteSite(site.id)">Delete</button>
                             </div>
                         </div>
                     </div>

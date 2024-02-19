@@ -57,4 +57,14 @@ export class SiteListComponent implements OnInit {
     this.siteId = id;
     this.formState = "Edit";
   }
+
+  deleteSite(id: string) {
+    this.passwordManagerService.deleteSite(id)
+      .then(() => {
+        console.log("Data deleted successfully!");      
+      })
+      .catch(err => {
+        console.log(err);        
+      });
+  }
 }
