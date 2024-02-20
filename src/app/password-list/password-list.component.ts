@@ -4,6 +4,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { PasswordManagerService } from '../password-manager.service';
 import { Observable } from 'rxjs';
+import { AES, enc } from "crypto-js"
 
 @Component({
   selector: 'app-password-list',
@@ -21,7 +22,7 @@ export class PasswordListComponent implements OnInit {
   siteURL!: string;
   siteImgURL!: string;
 
-  passwordList!: Observable<Array<any>>;
+  passwordList!: Array<any>;
 
   email!: string;
   username!: string;
@@ -54,7 +55,10 @@ export class PasswordListComponent implements OnInit {
     this.passwordId = "";
   }
 
-  onSubmit(values: NgForm) {
+  onSubmit(values: any) {
+    const encryptedPassword = this.encryptPassword(values.password);
+    values.password = encryptedPassword;
+
     if (this.formState === "Add New") {
       this.passwordManagerService.addPassword(values, this.siteId)
         .then(() => {
@@ -79,7 +83,10 @@ export class PasswordListComponent implements OnInit {
   }
 
   getAllPasswords() {
-    this.passwordList = this.passwordManagerService.getAllPasswords(this.siteId);
+    this.passwordManagerService.getAllPasswords(this.siteId)
+      .subscribe(val => {
+        this.passwordList = val;
+      });
   }
 
   editPassword(email: string, username: string, password: string, passwordId: string) {
@@ -106,5 +113,24 @@ export class PasswordListComponent implements OnInit {
     this.isSuccess = true;
     this.alertMessage = message;
     this.alertColor = bgColor;
+  }
+
+  encryptPassword(password: string) {
+    const secretKey = "j+QXyRS9bW/cJbK0FpbgEuribPidLNt9nAofwIilfqRAW/Q9LpRZnt6xJLhx1tAf";
+
+    const encryptedPassword = AES.encrypt(password, secretKey).toString();
+    return encryptedPassword;
+  }
+
+  decryptPassword(password: string) {
+    const secretKey = "j+QXyRS9bW/cJbK0FpbgEuribPidLNt9nAofwIilfqRAW/Q9LpRZnt6xJLhx1tAf";
+
+    const decryptedPassword = AES.decrypt(password, secretKey).toString(enc.Utf8);
+    return decryptedPassword;
+  }
+
+  onDecrypt(password: string, index: number) {
+    const decryptedPassword = this.decryptPassword(password);
+    this.passwordList[index].password = decryptedPassword;
   }
 }
