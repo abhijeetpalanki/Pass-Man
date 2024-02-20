@@ -1,64 +1,114 @@
 <app-navbar></app-navbar>
 <div class="container mx-auto my-5">
-    <h1 class="mt-0 mb-2">Pass-Man</h1>
-    <p class="mb-2">Protect yourself, your family, or your global workforce with simple security, easy secret sharing.
-        Prepare for a password[less] future by embracing pervasive password management today.</p>
-    <button class="btn btn-dark mb-2">Add New Site</button>
+  <h1 class="mt-0 mb-2">Pass-Man</h1>
+  <p class="mb-2">
+    Protect yourself, your family, or your global workforce with simple
+    security, easy secret sharing. Prepare for a password[less] future by
+    embracing pervasive password management today.
+  </p>
+  <button class="btn btn-dark mb-2">Add New Site</button>
 
-    <div class="p-3 my-3 {{alertColor}} text-light rounded" *ngIf="isSuccess">
-        Data {{alertMessage}} successfully!
-    </div>
+  <div class="p-3 my-3 {{ alertColor }} text-light rounded" *ngIf="isSuccess">
+    Data {{ alertMessage }} successfully!
+  </div>
 
-    <div class="border border-dark py-2 px-5">
-        <h2 class="text-center">{{formState}} Site</h2>
-        <p class="text-center">You can {{formState}} site from below form</p>
-        <form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
-            <div class="mb-3">
-                <label for="siteName" class="form-label">Site Name</label>
-                <input [(ngModel)]="siteName" type="text" class="form-control" id="siteName" name="siteName" />
-            </div>
-            <div class="mb-3">
-                <label for="siteURL" class="form-label">Site URL</label>
-                <input [(ngModel)]="siteURL" type="text" class="form-control" id="siteURL" name="siteURL" />
-            </div>
-            <div class="mb-3">
-                <label for="siteImgURL" class="form-label">Site Image URL</label>
-                <input [(ngModel)]="siteImgURL" type="text" class="form-control" id="siteImgURL" name="siteImgURL" />
-            </div>
+  <div class="border border-dark py-2 px-5">
+    <h2 class="text-center">{{ formState }} Site</h2>
+    <p class="text-center">You can {{ formState }} site from below form</p>
+    <form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
+      <div class="mb-3">
+        <label for="siteName" class="form-label">Site Name</label>
+        <input
+          [(ngModel)]="siteName"
+          type="text"
+          class="form-control"
+          id="siteName"
+          name="siteName"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="siteURL" class="form-label">Site URL</label>
+        <input
+          [(ngModel)]="siteURL"
+          type="text"
+          class="form-control"
+          id="siteURL"
+          name="siteURL"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="siteImgURL" class="form-label">Site Image URL</label>
+        <input
+          [(ngModel)]="siteImgURL"
+          type="text"
+          class="form-control"
+          id="siteImgURL"
+          name="siteImgURL"
+        />
+      </div>
 
-            <div class="d-flex gap-2">
-                <button type="submit" class="btn btn-dark">{{formState}} Site</button>
-                <button class="btn btn-outline-dark">Cancel</button>
-            </div>
-        </form>
-    </div>
+      <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-dark">{{ formState }} Site</button>
+        <button class="btn btn-outline-dark">Cancel</button>
+      </div>
+    </form>
+  </div>
 
-    <div class="container mt-5">
-        <div class="row row-cols-4 gap-2">
-            <ng-container *ngFor="let site of allSites | async">
-                <div class="col px-0">
-                    <div class="card border border-2 border-dark" style="height: 300px;">
-                        <img [src]="site.siteImgURL" class="card-img-top" alt="site"
-                            style="height: 120px; object-fit: cover;">
-                        <div class="card-body">
-                            <h4 class="card-title">{{site.siteName}}</h4>
-                            <p class="card-text bg-info text-light rounded px-2">
-                                {{site.siteURL}}
-                            </p>
-                        </div>
-                        <div class="card-footer">
-                            <div class="d-flex gap-2">
-                                <button class="btn btn-dark" [routerLink]="['/password-list']"
-                                    [queryParams]="{id: site.id, siteName: site.siteName, siteURL: site.siteURL, siteImgURL: site.siteImgURL}">Add
-                                    New</button>
-                                <button class="btn btn-outline-dark"
-                                    (click)="editSite(site.siteName, site.siteURL, site.siteImgURL, site.id)">Edit</button>
-                                <button class="btn btn-outline-dark" (click)="deleteSite(site.id)">Delete</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </ng-container>
+  <div class="container mt-5">
+    <div class="row row-cols-4 gap-2">
+      <ng-container *ngFor="let site of allSites | async">
+        <div class="col px-0">
+          <div class="card border border-2 border-dark" style="height: 300px">
+            <img
+              [src]="site.siteImgURL"
+              class="card-img-top"
+              alt="site"
+              style="height: 120px; object-fit: cover"
+            />
+            <div class="card-body">
+              <h4 class="card-title">{{ site.siteName }}</h4>
+              <p class="card-text bg-info text-light rounded px-2">
+                {{ site.siteURL }}
+              </p>
+            </div>
+            <div class="card-footer">
+              <div class="d-flex gap-2">
+                <button
+                  class="btn btn-dark"
+                  [routerLink]="['/password-list']"
+                  [queryParams]="{
+                    id: site.id,
+                    siteName: site.siteName,
+                    siteURL: site.siteURL,
+                    siteImgURL: site.siteImgURL
+                  }"
+                >
+                  Add New
+                </button>
+                <button
+                  class="btn btn-outline-dark"
+                  (click)="
+                    editSite(
+                      site.siteName,
+                      site.siteURL,
+                      site.siteImgURL,
+                      site.id
+                    )
+                  "
+                >
+                  Edit
+                </button>
+                <button
+                  class="btn btn-outline-dark"
+                  (click)="deleteSite(site.id)"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
+      </ng-container>
     </div>
+  </div>
 </div>

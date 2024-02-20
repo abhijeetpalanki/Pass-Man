@@ -8,7 +8,6 @@ import { SiteListComponent } from './site-list/site-list.component';
   standalone: true,
   imports: [RouterOutlet, SiteListComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'pass-man';

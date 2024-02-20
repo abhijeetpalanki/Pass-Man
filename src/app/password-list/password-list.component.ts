@@ -4,7 +4,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { PasswordManagerService } from '../password-manager.service';
 import { Observable } from 'rxjs';
-import { AES, enc } from "crypto-js"
+import { AES, enc } from 'crypto-js';
 import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
@@ -12,7 +12,6 @@ import { NavbarComponent } from '../navbar/navbar.component';
   standalone: true,
   imports: [CommonModule, FormsModule, NavbarComponent],
   templateUrl: './password-list.component.html',
-  styleUrl: './password-list.component.css'
 })
 export class PasswordListComponent implements OnInit {
   activatedRoute = inject(ActivatedRoute);
@@ -30,11 +29,11 @@ export class PasswordListComponent implements OnInit {
   password!: string;
   passwordId!: string;
 
-  formState: string = "Add New";
+  formState: string = 'Add New';
 
   isSuccess: boolean = false;
-  alertMessage: string = "";
-  alertColor: string = "";
+  alertMessage: string = '';
+  alertColor: string = '';
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((val: any) => {
@@ -48,64 +47,73 @@ export class PasswordListComponent implements OnInit {
   }
 
   resetForm() {
-    this.email = "";
-    this.username = "";
-    this.password = "";
+    this.email = '';
+    this.username = '';
+    this.password = '';
 
-    this.formState = "Add New";
-    this.passwordId = "";
+    this.formState = 'Add New';
+    this.passwordId = '';
   }
 
   onSubmit(values: any) {
     const encryptedPassword = this.encryptPassword(values.password);
     values.password = encryptedPassword;
 
-    if (this.formState === "Add New") {
-      this.passwordManagerService.addPassword(values, this.siteId)
+    if (this.formState === 'Add New') {
+      this.passwordManagerService
+        .addPassword(values, this.siteId)
         .then(() => {
-          console.log("Password added successfully!");
-          this.showToast("added", "bg-success");
+          console.log('Password added successfully!');
+          this.showToast('added', 'bg-success');
           this.resetForm();
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
-    } else if (this.formState === "Edit") {
-      this.passwordManagerService.updatePassword(this.siteId, this.passwordId, values)
+    } else if (this.formState === 'Edit') {
+      this.passwordManagerService
+        .updatePassword(this.siteId, this.passwordId, values)
         .then(() => {
-          console.log("Password updated successfully!");
-          this.showToast("updated", "bg-info");
+          console.log('Password updated successfully!');
+          this.showToast('updated', 'bg-info');
           this.resetForm();
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     }
   }
 
   getAllPasswords() {
-    this.passwordManagerService.getAllPasswords(this.siteId)
-      .subscribe(val => {
+    this.passwordManagerService
+      .getAllPasswords(this.siteId)
+      .subscribe((val) => {
         this.passwordList = val;
       });
   }
 
-  editPassword(email: string, username: string, password: string, passwordId: string) {
+  editPassword(
+    email: string,
+    username: string,
+    password: string,
+    passwordId: string
+  ) {
     this.email = email;
     this.username = username;
     this.password = password;
     this.passwordId = passwordId;
 
-    this.formState = "Edit";
+    this.formState = 'Edit';
   }
 
   deletePassword(passwordId: string) {
-    this.passwordManagerService.deletePassword(this.siteId, passwordId)
+    this.passwordManagerService
+      .deletePassword(this.siteId, passwordId)
       .then(() => {
-        console.log("Password deleted successfully!");
-        this.showToast("deleted", "bg-danger");
+        console.log('Password deleted successfully!');
+        this.showToast('deleted', 'bg-danger');
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   }
@@ -117,16 +125,20 @@ export class PasswordListComponent implements OnInit {
   }
 
   encryptPassword(password: string) {
-    const secretKey = "j+QXyRS9bW/cJbK0FpbgEuribPidLNt9nAofwIilfqRAW/Q9LpRZnt6xJLhx1tAf";
+    const secretKey =
+      'j+QXyRS9bW/cJbK0FpbgEuribPidLNt9nAofwIilfqRAW/Q9LpRZnt6xJLhx1tAf';
 
     const encryptedPassword = AES.encrypt(password, secretKey).toString();
     return encryptedPassword;
   }
 
   decryptPassword(password: string) {
-    const secretKey = "j+QXyRS9bW/cJbK0FpbgEuribPidLNt9nAofwIilfqRAW/Q9LpRZnt6xJLhx1tAf";
+    const secretKey =
+      'j+QXyRS9bW/cJbK0FpbgEuribPidLNt9nAofwIilfqRAW/Q9LpRZnt6xJLhx1tAf';
 
-    const decryptedPassword = AES.decrypt(password, secretKey).toString(enc.Utf8);
+    const decryptedPassword = AES.decrypt(password, secretKey).toString(
+      enc.Utf8
+    );
     return decryptedPassword;
   }
 

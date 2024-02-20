@@ -11,7 +11,6 @@ import { NavbarComponent } from '../navbar/navbar.component';
   standalone: true,
   imports: [FormsModule, CommonModule, RouterModule, NavbarComponent],
   templateUrl: './site-list.component.html',
-  styleUrl: './site-list.component.css'
 })
 export class SiteListComponent implements OnInit {
   passwordManagerService = inject(PasswordManagerService);
@@ -22,33 +21,35 @@ export class SiteListComponent implements OnInit {
   siteImgURL!: string;
   siteId!: string;
 
-  formState: string = "Add New";
+  formState: string = 'Add New';
 
   isSuccess: boolean = false;
-  alertMessage: string = "";
-  alertColor: string = "";
+  alertMessage: string = '';
+  alertColor: string = '';
 
   ngOnInit(): void {
     this.getAllSites();
   }
 
   onSubmit(values: NgForm) {
-    if (this.formState === "Add New") {
-      this.passwordManagerService.addSite(values)
+    if (this.formState === 'Add New') {
+      this.passwordManagerService
+        .addSite(values)
         .then(() => {
-          console.log("Data added successfully!");
-          this.showToast("added", "bg-success");
+          console.log('Data added successfully!');
+          this.showToast('added', 'bg-success');
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
-    } else if (this.formState === "Edit") {
-      this.passwordManagerService.updateSite(this.siteId, values)
+    } else if (this.formState === 'Edit') {
+      this.passwordManagerService
+        .updateSite(this.siteId, values)
         .then(() => {
-          console.log("Data updated successfully!");
-          this.showToast("updated", "bg-info");
+          console.log('Data updated successfully!');
+          this.showToast('updated', 'bg-info');
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     }
@@ -63,16 +64,17 @@ export class SiteListComponent implements OnInit {
     this.siteURL = siteURL;
     this.siteImgURL = siteImgURL;
     this.siteId = id;
-    this.formState = "Edit";
+    this.formState = 'Edit';
   }
 
   deleteSite(id: string) {
-    this.passwordManagerService.deleteSite(id)
+    this.passwordManagerService
+      .deleteSite(id)
       .then(() => {
-        console.log("Data deleted successfully!");
-        this.showToast("deleted", "bg-danger");
+        console.log('Data deleted successfully!');
+        this.showToast('deleted', 'bg-danger');
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   }
