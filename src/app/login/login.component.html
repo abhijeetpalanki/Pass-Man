@@ -1,1 +1,41 @@
-<p>login works!</p>
+<div
+  class="d-flex align-items-center justify-content-center px-3 py-5 mx-auto vh-100"
+>
+  <div class="card border-3 border-dark rounded" style="width: 20rem">
+    <h4 class="card-header">Login to your account</h4>
+    <div class="card-body">
+      <div class="p-3 my-3 bg-danger text-light rounded" *ngIf="isError">
+        The email or password is incorrect!
+      </div>
+
+      <form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
+        <div class="mb-3">
+          <label for="email" class="form-label">Your Email</label>
+          <input
+            ngModel
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            placeholder="name@company.com"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            ngModel
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            placeholder="***********"
+          />
+        </div>
+
+        <button type="submit" class="btn btn-outline-dark w-100">
+          Sign In
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

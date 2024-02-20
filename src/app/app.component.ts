@@ -6,7 +6,7 @@ import { SiteListComponent } from './site-list/site-list.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent, SiteListComponent],
+  imports: [RouterOutlet, SiteListComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

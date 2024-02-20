@@ -5,11 +5,12 @@ import { ActivatedRoute } from '@angular/router';
 import { PasswordManagerService } from '../password-manager.service';
 import { Observable } from 'rxjs';
 import { AES, enc } from "crypto-js"
+import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
   selector: 'app-password-list',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, NavbarComponent],
   templateUrl: './password-list.component.html',
   styleUrl: './password-list.component.css'
 })
