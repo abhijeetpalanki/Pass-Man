@@ -1,8 +1,7 @@
 <div class="container mx-auto my-5">
     <h1 class="mt-0 mb-2">Pass-Man</h1>
-    <p class="mb-2">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Debitis repudiandae, deleniti magni
-        necessitatibus pariatur cumque eum, doloremque laudantium veniam excepturi dolore ipsam iste enim nihil
-        provident. Odio eos quia odit.</p>
+    <p class="mb-2">Protect yourself, your family, or your global workforce with simple security, easy secret sharing.
+        Prepare for a password[less] future by embracing pervasive password management today.</p>
     <button class="btn btn-dark mb-2">Add New Site</button>
 
     <div class="p-3 my-3 {{alertColor}} text-light rounded" *ngIf="isSuccess">
@@ -48,7 +47,9 @@
                         </div>
                         <div class="card-footer">
                             <div class="d-flex gap-2">
-                                <button class="btn btn-dark">Add New</button>
+                                <button class="btn btn-dark" [routerLink]="['/password-list']"
+                                    [queryParams]="{id: site.id, siteName: site.siteName, siteURL: site.siteURL, siteImgURL: site.siteImgURL}">Add
+                                    New</button>
                                 <button class="btn btn-outline-dark"
                                     (click)="editSite(site.siteName, site.siteURL, site.siteImgURL, site.id)">Edit</button>
                                 <button class="btn btn-outline-dark" (click)="deleteSite(site.id)">Delete</button>
